@@ -113,14 +113,6 @@ Vue.component('messages-list', {
                 ':editMethod="editMethod"/>' +
         '</div>',
 
-    created: function () {
-        messageApi.get().then(result =>
-            result.json().then(data =>
-                data.forEach(message => this.messages.push(message))
-            )
-        )
-    },
-
     methods: {
         editMethod: function (message){
             this.message = message
@@ -134,8 +126,17 @@ Vue.component('messages-list', {
 var app = new Vue({
     el: '#app',
 
-    template: '<messages-list :messages = "messages"/>',
+    template:
+        '<div>' +
+            '<div v-if="!profile">You need to log in by <a href="/login">Google</a></div>'+
+            '<div v-else>' +
+                '<div>{{profile.name}}&nbsp; <a href="/logout">Sign out</a></div>' +
+                '<messages-list :messages = "messages"/>' +
+            '</div>' +
+        '</div>',
     data: {
-        messages: []
-    }
+        messages: frontendData.messages,
+        profile: frontendData.profile
+    },
+
 });

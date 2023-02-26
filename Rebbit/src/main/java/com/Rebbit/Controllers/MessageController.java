@@ -46,7 +46,8 @@ public class MessageController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Message message){
-        messageRepo.delete(message);
+    public void delete(@PathVariable Long id){
+        messageRepo.deleteById(id);
     }
+
 }
